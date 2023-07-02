@@ -4,6 +4,7 @@
 void File::toFile() {
  
     ifstream csvFile(this->csv);
+    ofstream test("./test");
 
     if(!csvFile.is_open()) {
         cout<<"Error openning csv file"<<endl;
@@ -21,6 +22,8 @@ void File::toFile() {
 
 
     long long int lastWord = 0;
+
+    bool isCompleteToken;
 
     while (csvFile){
 
@@ -40,10 +43,12 @@ void File::toFile() {
                 total++;
             }
 
-            cout<<count<<" -> ";
             
-            cout.write(token, strlen(token));
-            cout<<" : "<<total<<endl;
+
+            test<<count<<" -> ";
+            
+            test.write(token, strlen(token));
+            test<<" : "<<total<<endl;
             prevTotal = total;
             
             //prevPosition = currentPosition;
@@ -56,19 +61,19 @@ void File::toFile() {
             count++;
         }
 
-        cout<<"Total: "<<total<<endl;       
+        test<<"Total: "<<total<<endl;       
         
         i++;
 
         streampos currentPosition = csvFile.tellg();
 
-        if(buffer[lenBuffer - 2] != ',') {
+        if(buffer[lenBuffer - lastWord - 1] == '\"' || buffer[lenBuffer - 1] != ',') {
             position = prevTotal;
             total = prevTotal;
-            cout<<"Position --> "<<position<<endl;
+            test<<"Position --> "<<position<<endl;
             count--;
         } else {
-            position = currentPosition;
+            position = total;
         }
 
         //if(i == 2) break;

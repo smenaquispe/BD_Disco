@@ -16,6 +16,16 @@ char* myStrtok(char* str, const char* delimiter) {
     bool insideQuotes = false;  // Variable para rastrear si estamos dentro de comillas
     bool quotesClosed = true;  // Variable para rastrear si las comillas se cierran
 
+     // Buscar fin de línea
+    char* endOfLinePtr = std::strchr(buffer, '\n');
+    if (endOfLinePtr != nullptr && (delimiterPtr == nullptr || endOfLinePtr < delimiterPtr)) {
+        // Reemplazar el fin de línea por un carácter nulo
+        *endOfLinePtr = '\0';
+        buffer = endOfLinePtr + 1;
+        return token;
+    }
+
+
     while (delimiterPtr != nullptr) {
         char* doubleQuotesPtr = std::strchr(buffer, '\"');
         if (doubleQuotesPtr != nullptr && doubleQuotesPtr < delimiterPtr) {
