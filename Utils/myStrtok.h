@@ -35,6 +35,15 @@ char* myStrtok(char* str, const char* delimiter) {
         }
     }
 
+    // Buscar fin de línea
+    char* endOfLinePtr = std::strchr(buffer, '\n');
+    if (endOfLinePtr != nullptr && (delimiterPtr == nullptr || endOfLinePtr < delimiterPtr)) {
+        // Reemplazar el fin de línea por un carácter nulo
+        *endOfLinePtr = '\0';
+        buffer = endOfLinePtr + 1;
+        return token;
+    }
+
     if (delimiterPtr != nullptr) {
         *delimiterPtr = '\0';
         buffer = delimiterPtr + 1;
@@ -44,6 +53,5 @@ char* myStrtok(char* str, const char* delimiter) {
 
     return token;
 }
-
 
 #endif
