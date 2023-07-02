@@ -1,10 +1,12 @@
+#include<iomanip>
 #include"Utils/myStrtok.h"
 #include"File.h"
 
 void File::toFile() {
  
     ifstream csvFile(this->csv);
-    ofstream test("./test");
+    ifstream schema("./docs/schema_output");
+    fstream file("./disk/file", std::ios::in | std::ios::out);
 
     if(!csvFile.is_open()) {
         cout<<"Error openning csv file"<<endl;
@@ -12,71 +14,89 @@ void File::toFile() {
     }
 
     int count = 0;
-    int total = 0;
-    int prevTotal = total;
-
+    int totalSize = 0, prevTotalSize = 0;
     int position = 1;
-    int i = 0;
-
-    streampos prevPosition = csvFile.tellg();
-
-
     long long int lastWord = 0;
 
-    bool isCompleteToken;
-
+    int size;
+    bool isHeader = true;
+    bool isCompleted = true;
+    bool prevIsCompleted = true;
+ 
     while (csvFile){
-
         
+        // comenzamos a leer a partir de la ultima posicion
         csvFile.seekg(position - 1);
+        // se lee en el buffer
         csvFile.read(buffer, lenBuffer - 1);
-        streamsize bufferBytes = csvFile.gcount();
-        //cout.write(buffer, bufferBytes);
         
+        //  cambiamos el ultimo caracter del buffer como fin de linea
         buffer[lenBuffer - 1] = '\0';
+
+        // tokenizamos el buffer
         char * token = myStrtok(buffer, ",");
         
         while (token != nullptr)
         {
-            if(count % 12 == 0) {
+            // si el contador alzanca el numero de columnas, reiniciamos el contador
+            if(count % 12 == 0 && isCompleted) {
+                
+                if(count == 12) isHeader = false;
+                
                 count = 0;
-                total++;
+                totalSize++;
+
+                schema.clear();
+                schema.seekg(0);
+
             }
 
-            
-
-            test<<count<<" -> ";
-            
-            test.write(token, strlen(token));
-            test<<" : "<<total<<endl;
-            prevTotal = total;
-            
-            //prevPosition = currentPosition;
-         
-            total += strlen(token) + 1;
-
+            if(isCompleted) schema >> size;
+    
+            // seteamos el complete como true
+            else {
+                prevIsCompleted = isCompleted;
+                isCompleted = true;
+            }
+    
+            // last word, es la longitud de la  ultima palabra 
             lastWord = strlen(token);
 
+            // escribimos las palabras
+            if(!isHeader) {
+                
+                // si previamente no estaba completo
+                if(!prevIsCompleted) {
+                    file.seekp(-size - 2, ios::cur);
+                    prevIsCompleted = true;
+                }
+
+                if(lastWord != 0) {
+                    file<<setw(size)<<token<<endl;
+                } 
+                else file<<setw(size)<<"-"<<endl;
+        
+            }
+
+            // el prevtotalsize, toma el valor anterior de la longitud total
+            prevTotalSize = totalSize;
+            totalSize += strlen(token) + 1;
+                    
             token = myStrtok(nullptr, ",");
             count++;
         }
-
-        test<<"Total: "<<total<<endl;       
         
-        i++;
-
-        streampos currentPosition = csvFile.tellg();
-
+        // en caso el token no es completo
         if(buffer[lenBuffer - lastWord - 1] == '\"' || buffer[lenBuffer - 1] != ',') {
-            position = prevTotal;
-            total = prevTotal;
-            test<<"Position --> "<<position<<endl;
+            totalSize = prevTotalSize;
             count--;
-        } else {
-            position = total;
+            prevIsCompleted = isCompleted;
+            isCompleted = false;
         }
+        
+        // la posicion ahora toma la sumatoria
+        position = totalSize;
 
-        //if(i == 2) break;
     }
     
     csvFile.close();
