@@ -13,45 +13,38 @@ char* myStrtok(char* str, const char* delimiter) {
 
     char* token = buffer;
     char* delimiterPtr = std::strpbrk(buffer, delimiter);
+    bool insideQuotes = false;  // Variable para rastrear si estamos dentro de comillas
+    bool quotesClosed = true;  // Variable para rastrear si las comillas se cierran
 
-    // Buscar comillas dobles
-    char* doubleQuotesPtr = std::strchr(buffer, '\"');
-    if (doubleQuotesPtr != nullptr && (delimiterPtr == nullptr || doubleQuotesPtr < delimiterPtr)) {
-        // Buscar la siguiente comilla doble
-        char* closingQuotesPtr = std::strchr(doubleQuotesPtr + 1, '\"');
-        if (closingQuotesPtr != nullptr) {
-            // Encontrar el próximo delimitador después de las comillas dobles
-            delimiterPtr = std::strpbrk(closingQuotesPtr + 1, delimiter);
+    while (delimiterPtr != nullptr) {
+        char* doubleQuotesPtr = std::strchr(buffer, '\"');
+        if (doubleQuotesPtr != nullptr && doubleQuotesPtr < delimiterPtr) {
+            // Estamos dentro de comillas
+            insideQuotes = !insideQuotes;
+            quotesClosed = !quotesClosed;
+        }
 
-            // Si se encuentra un delimitador, reemplazarlo por un carácter nulo
-            if (delimiterPtr != nullptr) {
-                *delimiterPtr = '\0';
-                buffer = delimiterPtr + 1;
-            } else {
-                buffer = nullptr;
-            }
-
+        // Si encontramos un número par de comillas y no estamos dentro de comillas
+        // (lo que significa que estamos fuera de las comillas abiertas y cerradas),
+        // entonces dividimos la cadena en un token en el delimitador actual.
+        if (quotesClosed && !insideQuotes) {
+            *delimiterPtr = '\0';
+            buffer = delimiterPtr + 1;
             return token;
         }
-    }
 
-    // Buscar fin de línea
-    char* endOfLinePtr = std::strchr(buffer, '\n');
-    if (endOfLinePtr != nullptr && (delimiterPtr == nullptr || endOfLinePtr < delimiterPtr)) {
-        // Reemplazar el fin de línea por un carácter nulo
-        *endOfLinePtr = '\0';
-        buffer = endOfLinePtr + 1;
+        delimiterPtr = std::strpbrk(delimiterPtr + 1, delimiter);
+    }
+   
+
+    // Si llegamos aquí, no se encontraron más delimitadores
+    if (*buffer) {
+        token = buffer;
+        buffer = nullptr;
         return token;
     }
 
-    if (delimiterPtr != nullptr) {
-        *delimiterPtr = '\0';
-        buffer = delimiterPtr + 1;
-    } else {
-        buffer = nullptr;
-    }
-
-    return token;
+    return nullptr;
 }
 
 #endif
