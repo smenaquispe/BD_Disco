@@ -5,8 +5,14 @@
 #include<fstream>
 #include<regex>
 #include<cstring>
+#include<vector>
 
 using namespace std;
+
+struct Node {
+    int id;
+    int posStart;
+};
 
 class File
 {
@@ -17,6 +23,12 @@ private:
     char * buffer;
     int numberColumns = 0;
     int totalRegisterBytes = 0;
+
+
+    // vectores para seguimiento sequencial
+    vector<Node> ids;
+    vector<Node> deleteds;
+
 public:
     File(string csv) {
         this->csv = csv;
@@ -32,6 +44,9 @@ public:
     
     // Fixed Functions
     void fixedToFile();
+    void fixedLoadFile();
+    void fixedGet(int id);
+    
 
     // Dynamic functions
     void dynamicToFile();
@@ -39,7 +54,11 @@ public:
 };
 
 #include"extractSchema.h"
+
 #include"Fixed/fixedToFile.h"
+#include"Fixed/fixedLoadFile.h"
+#include"Fixed/fixedGet.h"
+
 #include"Dynamic/dynamicToFile.h"
 
 #endif

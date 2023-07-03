@@ -6,7 +6,13 @@ using namespace std;
 int main() {
     File f("./titanic.csv");
     f.extractSchema();
-    f.dynamicToFile();
+    f.fixedToFile();
+    f.fixedLoadFile();
+    f.fixedGet(90);
+    f.fixedGet(190);
+    f.fixedGet(678);
+    f.fixedGet(2);
+
 
     return 0;
 }
