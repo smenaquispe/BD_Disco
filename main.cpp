@@ -27,12 +27,7 @@ int main() {
     f.dynamicToFile();
     f.dynamicLoadFile();
 
-    f.dynamicGet(890);
-    f.dynamicGet(600);
-    f.dynamicGet(500);
-    f.dynamicGet(120);
-    f.dynamicGet(1);
-
+    f.dynamicDelete(1);
 /*
     ifstream f("./disk/file2");
     f.seekg(193350);
