@@ -35,8 +35,7 @@ void File::fixedGet(int id) {
         } 
 
         cout<<" | ";
-
-    
+        
         if(count == numberColumns) {
             cout<<endl;
             break;

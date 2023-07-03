@@ -21,7 +21,7 @@ void File::fixedLoadFile() {
 
         if(count % numberColumns == 0) {
            
-            int position = totalSize + countIds + ((countIds) * numberColumns * 2);
+            int position = totalSize + (count * 2);
             file >> number;
 
             ids.push_back({number, position});  // guardamos todos los ids;
@@ -29,7 +29,7 @@ void File::fixedLoadFile() {
             schema.clear();
             schema.seekg(0);
         
-            totalSize -= size;
+            //totalSize -= size;
             countIds++;
         }
 

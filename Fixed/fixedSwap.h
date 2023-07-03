@@ -58,6 +58,17 @@ void File::fixedSwap(int a, int b) {
     }
     
     
+    // cambiamos en la lista en lazada
+    
+    for(Node & node : ids) {
+        if(node.id == a) {
+            node.posStart = posB;
+        }
+
+        if(node.id == b) {
+            node.posStart = posA;
+        }
+    }
 
 }
 

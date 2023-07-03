@@ -1,11 +1,12 @@
 #ifndef EXTRACT_SCHEMA_H
 #define EXTRACT_SCHEMA_H
 
+#include<regex>
 #include"File.h"
 
-void File::extractSchema() {
+void File::extractSchema(string schemaFile) {
     
-    ifstream schema("./docs/schema");
+    ifstream schema(schemaFile);
     ofstream schema_output("./docs/schema_output");
 
     // regex para extraer los pesos

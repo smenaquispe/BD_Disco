@@ -6,15 +6,14 @@
 void File::fixedDelete(int id) {
 
     int position;
-    for(const auto & node : ids) {
+    for(Node & node : ids) {
         
-        if(node.id == id) {
-            position = node.posStart;            
+        if(node.id == id) {            
+            deleteds.push_back(&node);
             break;
         }
     }
 
-    deleteds.push_back({id, position});
 }
 
 #endif

@@ -27,7 +27,7 @@ private:
 
     // vectores para seguimiento sequencial
     vector<Node> ids;
-    vector<Node> deleteds;
+    vector<Node*> deleteds;
 
 public:
     File(string csv) {
@@ -40,7 +40,7 @@ public:
     }
 
     // both functions
-    void extractSchema();
+    void extractSchema(string schemaFile);
     
     // Fixed Functions
     void fixedToFile();
@@ -49,6 +49,7 @@ public:
     int getFixedPositionRecord(int id);
     void fixedDelete(int id);
     void fixedSwap(int a, int b);
+    void fixedAdd(string inputFile);
 
     // Dynamic functions
     void dynamicToFile();
@@ -63,6 +64,7 @@ public:
 #include"Fixed/fixedDelete.h"
 #include"Fixed/fixedSwap.h"
 #include"Fixed/getFixedPositionRecord.h"
+#include"Fixed/fixedAdd.h"
 
 #include"Dynamic/dynamicToFile.h"
 
