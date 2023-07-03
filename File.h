@@ -57,6 +57,7 @@ public:
     void dynamicLoadFile();
     void dynamicGet(int id);
     void dynamicDelete(int id);
+    void dynamicAdd(string inputFile);
 
 };
 
@@ -74,5 +75,6 @@ public:
 #include"Dynamic/dynamicGet.h"
 #include"Dynamic/dynamicLoadFile.h"
 #include"Dynamic/dynamicDelete.h"
+#include"Dynamic/dynamicAdd.h"
 
 #endif

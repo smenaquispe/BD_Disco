@@ -27,7 +27,10 @@ int main() {
     f.dynamicToFile();
     f.dynamicLoadFile();
 
-    f.dynamicDelete(1);
+    //f.dynamicDelete(1);
+    f.dynamicAdd("./docs/input1");
+
+    f.dynamicGet(892);
 /*
     ifstream f("./disk/file2");
     f.seekg(193350);
