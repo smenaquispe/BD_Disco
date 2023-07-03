@@ -2,14 +2,14 @@
 #define FIXED_TO_FILE
 
 #include<iomanip>
-#include"Utils/myStrtok.h"
-#include"File.h"
+#include"../Utils/myStrtok.h"
+#include"../File.h"
 
 void File::fixedToFile() {
  
     ifstream csvFile(this->csv);
     ifstream schema("./docs/schema_output");
-    fstream file("./disk/file", std::ios::in | std::ios::out);
+    fstream file("./disk/file2", std::ios::in | std::ios::out);
 
     if(!csvFile.is_open()) {
         cout<<"Error openning csv file"<<endl;
@@ -42,9 +42,9 @@ void File::fixedToFile() {
         while (token != nullptr)
         {
             // si el contador alzanca el numero de columnas, reiniciamos el contador
-            if(count % 12 == 0 && isCompleted) {
+            if(count % this->numberColumns == 0 && isCompleted) {
                 
-                if(count == 12) isHeader = false;
+                if(count == this->numberColumns) isHeader = false;
                 
                 count = 0;
                 totalSize++;

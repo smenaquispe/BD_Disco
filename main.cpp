@@ -5,9 +5,8 @@ using namespace std;
 
 int main() {
     File f("./titanic.csv");
-    //f.extractSchema();
-    
-    f.toFile();
+    f.extractSchema();
+    f.dynamicToFile();
 
     return 0;
 }

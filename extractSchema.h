@@ -23,13 +23,14 @@ void File::extractSchema() {
             while (iterator != endIterator) {
                 cmatch match = *iterator;
                 schema_output<<match.str()<<endl;
-                cout<<match.str()<<endl;
                 this->totalRegisterBytes += atoi(match.str().c_str());
                 ++iterator;
+                numberColumns++;
             }
         }
 
         schema.close();
+        schema_output.close();
     } else {
         cout<<"No se puede abrir"<<endl;
     }

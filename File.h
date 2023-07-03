@@ -39,7 +39,7 @@ public:
 };
 
 #include"extractSchema.h"
-#include"fixedToFile.h"
-#include"dynamicToFile.h"
+#include"Fixed/fixedToFile.h"
+#include"Dynamic/dynamicToFile.h"
 
 #endif
