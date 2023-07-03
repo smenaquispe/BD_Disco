@@ -8,11 +8,7 @@ int main() {
     f.extractSchema();
     f.fixedToFile();
     f.fixedLoadFile();
-    f.fixedGet(90);
-    f.fixedGet(190);
-    f.fixedGet(678);
-    f.fixedGet(2);
-
+    f.fixedSwap(1,2);
 
     return 0;
 }

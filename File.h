@@ -46,7 +46,9 @@ public:
     void fixedToFile();
     void fixedLoadFile();
     void fixedGet(int id);
-    
+    int getFixedPositionRecord(int id);
+    void fixedDelete(int id);
+    void fixedSwap(int a, int b);
 
     // Dynamic functions
     void dynamicToFile();
@@ -58,6 +60,9 @@ public:
 #include"Fixed/fixedToFile.h"
 #include"Fixed/fixedLoadFile.h"
 #include"Fixed/fixedGet.h"
+#include"Fixed/fixedDelete.h"
+#include"Fixed/fixedSwap.h"
+#include"Fixed/getFixedPositionRecord.h"
 
 #include"Dynamic/dynamicToFile.h"
 
