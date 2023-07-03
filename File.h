@@ -24,6 +24,7 @@ private:
     int numberColumns = 0;
     int totalRegisterBytes = 0;
 
+    int numberRecords = 0;
 
     // vectores para seguimiento sequencial
     vector<Node> ids;
@@ -53,6 +54,8 @@ public:
 
     // Dynamic functions
     void dynamicToFile();
+    void dynamicLoadFile();
+    void dynamicGet(int id);
 
 };
 
@@ -67,5 +70,7 @@ public:
 #include"Fixed/fixedAdd.h"
 
 #include"Dynamic/dynamicToFile.h"
+#include"Dynamic/dynamicGet.h"
+#include"Dynamic/dynamicLoadFile.h"
 
 #endif

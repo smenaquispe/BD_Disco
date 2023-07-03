@@ -48,6 +48,8 @@ void File::dynamicToFile() {
             // si el contador alzanca el numero de columnas, reiniciamos el contador
             if(count % this->numberColumns == 0 && isCompleted) {
                 
+                numberRecords++;
+
                 totalSize++;
 
                 schema.clear();
@@ -87,8 +89,9 @@ void File::dynamicToFile() {
                 if(!prevIsCompleted) {
                     file.seekp(-lastWord, ios::cur);
                     prevIsCompleted = true;
-                }
 
+                }
+                
                 posLen += to_string(file.tellp());
 
                 if(strlen(token) != 0) {
@@ -99,10 +102,12 @@ void File::dynamicToFile() {
                     file<<"-";
                     nullBitMap += "0";
                 }
-
-                posLen += " ";
-                posLen += to_string(strlen(token));
-                posLen += " ";
+                
+                if(prevIsCompleted) {
+                    posLen += " ";
+                    posLen += to_string(strlen(token));
+                    posLen += " ";
+                }
             }
 
             // last word, es la longitud de la  ultima palabra 
@@ -122,6 +127,25 @@ void File::dynamicToFile() {
             count--;
             prevIsCompleted = isCompleted;
             isCompleted = false;
+
+            int i;
+            int a = 0;
+            for(i = posLen.size() - 1; i >= 0; i--) {
+                if(posLen[i] == ' ')
+                    a++;
+                if(a == 3) break;
+            }
+
+            string auxPosLen = "";
+            for(int j = 0; j < posLen.size(); j++) {
+                auxPosLen += posLen[j];
+                if(j == i) break;
+            }
+
+            posLen = auxPosLen;
+            
+            if(count == 0) posLen = "";
+        
         }
         
         // la posicion ahora toma la sumatoria
@@ -132,7 +156,7 @@ void File::dynamicToFile() {
     file<<" | "<<nullBitMap<<" | ";
     file<<posLen;
 
-    
+    numberRecords--;    
 
     csvFile.close();
 }

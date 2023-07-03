@@ -5,6 +5,7 @@ using namespace std;
 
 int main() {
 
+/*
     File f("./titanic.csv");
     f.extractSchema("./schema_titanic");
     f.fixedToFile();
@@ -19,13 +20,19 @@ int main() {
     f.fixedAdd("./docs/input1");
     
     f.fixedGet(892);
+*/
 
-    //f.fixedAdd("./docs/input1");
+    File f("./titanic.csv");
+    f.extractSchema("./schema_titanic");
+    f.dynamicToFile();
+    f.dynamicLoadFile();
 
-    //f.fixedDelete(3);
-    //f.fixedDelete(6);
-    //f.fixedGet(25);
-    
+    f.dynamicGet(890);
+    f.dynamicGet(600);
+    f.dynamicGet(500);
+    f.dynamicGet(120);
+    f.dynamicGet(1);
+
 /*
     ifstream f("./disk/file2");
     f.seekg(193350);
