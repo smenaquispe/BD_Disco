@@ -26,7 +26,10 @@ void File::dynamicToFile() {
     bool isHeader = true;
     bool isCompleted = true;
     bool prevIsCompleted = true;
- 
+
+    string nullBitMap = "";
+    string posLen = "";
+
     while (csvFile){
         
         // comenzamos a leer a partir de la ultima posicion
@@ -45,15 +48,27 @@ void File::dynamicToFile() {
             // si el contador alzanca el numero de columnas, reiniciamos el contador
             if(count % this->numberColumns == 0 && isCompleted) {
                 
-                if(count == this->numberColumns) isHeader = false;
-                
-                count = 0;
                 totalSize++;
 
                 schema.clear();
                 schema.seekg(0);
 
-                file<<endl;
+                // colocamo el null bit map
+                if(!isHeader)
+                    file<<" | "<<nullBitMap<<" | ";
+                nullBitMap = "";
+
+                // colocamos la cadena de posicion y longitudes
+                file<<posLen;
+                posLen = "";
+
+                if(!isHeader)
+                    file<<endl;
+            
+            
+                if(count == this->numberColumns) isHeader = false;
+                
+                count = 0;
             }
 
             if(isCompleted) schema >> size;
@@ -74,14 +89,21 @@ void File::dynamicToFile() {
                     prevIsCompleted = true;
                 }
 
+                posLen += to_string(file.tellp());
+
                 if(strlen(token) != 0) {
                     file<<token;
+                    nullBitMap += "1";
                 } 
                 else {
                     file<<"-";
+                    nullBitMap += "0";
                 }
-            }
 
+                posLen += " ";
+                posLen += to_string(strlen(token));
+                posLen += " ";
+            }
 
             // last word, es la longitud de la  ultima palabra 
             lastWord = strlen(token);
@@ -106,7 +128,12 @@ void File::dynamicToFile() {
         position = totalSize;
 
     }
+
+    file<<" | "<<nullBitMap<<" | ";
+    file<<posLen;
+
     
+
     csvFile.close();
 }
 #endif
