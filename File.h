@@ -27,12 +27,19 @@ public:
         delete buffer;
     }
 
+    // both functions
     void extractSchema();
-    void toFile();
+    
+    // Fixed Functions
+    void fixedToFile();
+
+    // Dynamic functions
+    void dynamicToFile();
 
 };
 
 #include"extractSchema.h"
-#include"toFile.h"
+#include"fixedToFile.h"
+#include"dynamicToFile.h"
 
 #endif

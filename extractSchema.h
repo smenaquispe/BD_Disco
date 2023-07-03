@@ -1,3 +1,6 @@
+#ifndef EXTRACT_SCHEMA_H
+#define EXTRACT_SCHEMA_H
+
 #include"File.h"
 
 void File::extractSchema() {
@@ -32,3 +35,5 @@ void File::extractSchema() {
     }
 
 }
+
+#endif

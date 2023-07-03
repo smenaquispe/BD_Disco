@@ -1,8 +1,11 @@
+#ifndef FIXED_TO_FILE
+#define FIXED_TO_FILE
+
 #include<iomanip>
 #include"Utils/myStrtok.h"
 #include"File.h"
 
-void File::toFile() {
+void File::fixedToFile() {
  
     ifstream csvFile(this->csv);
     ifstream schema("./docs/schema_output");
@@ -101,3 +104,5 @@ void File::toFile() {
     
     csvFile.close();
 }
+
+#endif
