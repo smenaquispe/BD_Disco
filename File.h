@@ -16,8 +16,8 @@ struct Node {
 
 class File
 {
+public:
 
-private:
     string csv;
     int lenBuffer = 256; // tolerancia maxima del buffer
     char * buffer;
@@ -30,7 +30,6 @@ private:
     vector<Node> ids;
     vector<Node*> deleteds;
 
-public:
     File(string csv) {
         this->csv = csv;
         buffer = new char[lenBuffer];
@@ -59,6 +58,7 @@ public:
     void dynamicDelete(int id);
     void dynamicAdd(string inputFile);
 
+    void dynamicGet();
 };
 
 #include"extractSchema.h"

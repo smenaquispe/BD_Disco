@@ -3,6 +3,12 @@
 
 #include"../File.h"
 
+void File::dynamicGet() {
+    for(auto & n : ids) {
+        this->dynamicGet(n.id);
+    }
+}
+
 void File::dynamicGet(int id) {
     
     ifstream file("./disk/file");
